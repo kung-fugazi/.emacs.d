@@ -1,18 +1,3 @@
-;; Disable tool bar, menu bar, scroll bar.
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-
-;; Highlight current line.
-(global-hl-line-mode t)
-
-;; Use `command` as `meta` in macOS.
-(setq mac-command-modifier 'meta)
-
-;; Moves 'Customize' to distinct file
-(setq custom-file "~/.emacs.d/custom-file.el")
-(load-file custom-file)
-
 ;; melpa and use-package
 ;; -----------------------------------------------------
 (require 'package)
@@ -29,6 +14,61 @@
   (require 'use-package))
 ;; -----------------------------------------------------
 
+
+;; Moves 'Customize' to distinct file
+;; -----------------------------------------------------
+(setq custom-file "~/.emacs.d/custom.el")
+(load-file custom-file)
+;; -----------------------------------------------------
+
+
+;; Disable tool bar, menu bar, scroll bar.
+;; -----------------------------------------------------
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+;; -----------------------------------------------------
+
+
+;; For use with sync-TeX and similar applications:
+;; -----------------------------------------------------
+(server-start)
+;; -----------------------------------------------------
+
+
+;; defaults electric-pair-mode
+;; -----------------------------------------------------
+(electric-pair-mode 1)
+;; -----------------------------------------------------
+
+
+;; auto-fill-mode default in all major modes
+;; -----------------------------------------------------
+(setq-default auto-fill-function 'do-auto-fill)
+;; -----------------------------------------------------
+
+
+;; enable upcase-region and downcase-region
+;; -----------------------------------------------------
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+;; -----------------------------------------------------
+
+
+;; Highlight current line.
+;; -----------------------------------------------------
+(global-hl-line-mode t)
+;; -----------------------------------------------------
+
+
+;; Use `command` as `meta` in macOS.
+;; -----------------------------------------------------
+(setq mac-command-modifier 'meta)
+;; -----------------------------------------------------
+
+
+
+;;; PACKAGES
 
 ;; use-package-chords
 ;; -----------------------------------------------------
@@ -47,7 +87,8 @@
 	  (defun make-my-slash-backslash ()
 	    (local-set-key (kbd "/") "\\"))
 
-	  (add-hook 'TeX-mode-hook 'make-my-slash-backslash))
+	  (add-hook 'TeX-mode-hook 'make-my-slash-backslash)
+          (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
 ;; -----------------------------------------------------
 
 
