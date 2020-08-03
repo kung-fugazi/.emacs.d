@@ -22,6 +22,11 @@
 ;; -----------------------------------------------------
 
 
+;; Tells Emacs to place tilde files in a special directory.
+;; -----------------------------------------------------
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+;; -----------------------------------------------------
+
 ;; Disable tool bar, menu bar, scroll bar.
 ;; -----------------------------------------------------
 (tool-bar-mode -1)
@@ -68,7 +73,7 @@
 
 
 
-;;; PACKAGES
+;;; PACKAGES (buffer-size)
 
 ;; use-package-chords
 ;; -----------------------------------------------------
@@ -179,3 +184,5 @@
 (use-package yasnippet
   :ensure t)
 ;; -----------------------------------------------------
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
