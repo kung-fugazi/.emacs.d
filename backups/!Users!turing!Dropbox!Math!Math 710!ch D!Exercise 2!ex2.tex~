@@ -1,0 +1,28 @@
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
+\documentclass[11pt]{article}
+\usepackage{mypackage}
+\usepackage{mythms}
+
+\pagestyle{fancy}
+\setlength{\headheight}{65pt}
+\setlength{\parindent}{0pt}
+
+\lhead{William Jones\qquad\texorpdfstring{$\oplus$}{}\qquad Math 710}
+\rhead{3 August 2020}
+
+\begin{document}
+\begin{exer}{1}
+  Suppose $a_{1}$, $a_{2}$,~\ldots \ and $c_{1}$, $c_{2}$~\ldots \ are
+  convergent sequences in $\mathbf{R}^{n}$. Prove that%
+  %
+  \begin{equation*}
+    \lim_{k\to\infty}(a_{k}+c_{k})
+    = \lim_{k\to\infty}a_{k}+\lim_{k\to\infty}c_{k} .
+  \end{equation*}
+\end{exer}
+\end{document}

@@ -4,6 +4,7 @@
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -46,6 +47,10 @@
 (electric-pair-mode 1)
 ;; -----------------------------------------------------
 
+
+;; TEST: see if this allows toggling
+;; -----------------------------------------------------
+(global-set-key (kbd "C-M-&") 'override-global-mode)
 
 ;; auto-fill-mode default in all major modes
 ;; -----------------------------------------------------
@@ -93,7 +98,8 @@
 	    (local-set-key (kbd "/") "\\"))
 
 	  (add-hook 'TeX-mode-hook 'make-my-slash-backslash)
-          (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
+          (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+	  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode))
 ;; -----------------------------------------------------
 
 
@@ -108,13 +114,15 @@
 ;; avy
 ;; -----------------------------------------------------
 (use-package avy
-  :ensure t
-  :bind ("C-<" . avy-goto-char-2)
-        ("C-," . avy-goto-line)
-        ("C-." . avy-goto-char-in-line)
-	("C->" . avy-isearch)
-	("C-;" . avy-copy-region)
-	("C-:" . avy-kill-region))
+  :ensure t)
+
+(bind-keys*
+ ("C-," . avy-goto-char-2)
+ ("C-<" . avy-goto-line)
+ ("C-." . avy-goto-char-in-line)
+ ("C->" . avy-isearch)
+ ("C-;" . avy-copy-region)
+ ("C-:" . avy-kill-region))
 ;; -----------------------------------------------------
 
 
@@ -137,8 +145,15 @@
 
 ;; all-the-icons
 ;; -----------------------------------------------------
-(use-package all-the-icons
+(use-package all-the-icons ; General
   :ensure t)
+
+(require 'all-the-icons-gnus) ; Gnus
+(all-the-icons-gnus-setup)
+
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; Dired
+
+(all-the-icons-ibuffer-mode 1) ; Ibuffer
 ;; -----------------------------------------------------
 
 
@@ -169,7 +184,8 @@
 ;; exec-path-from-shell
 ;; -----------------------------------------------------
 (use-package exec-path-from-shell
-  :ensure t)
+  :ensure t
+  :config (exec-path-from-shell-initialize))
 ;; -----------------------------------------------------
 
 ;; olivetti
