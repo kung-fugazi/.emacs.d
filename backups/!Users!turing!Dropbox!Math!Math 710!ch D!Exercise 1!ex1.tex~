@@ -17,6 +17,12 @@
 
 \begin{document}
 \begin{exer}{1}
-  Suppose $a_{1}$, $a_{2}$,~\ldots and $c_{1}$, $c_{2}$
+  Suppose $a_{1}$, $a_{2}$,~\ldots \ and $c_{1}$, $c_{2}$~\ldots \ are
+  convergent sequences in $\mathbf{R}^{n}$. Prove that%
+  %
+  \begin{equation*}
+    \lim_{k\to\infty}(a_{k}+c_{k})
+    = \lim_{k\to\infty}a_{k}+\lim_{k\to\infty}c_{k} .
+  \end{equation*}
 \end{exer}
 \end{document}

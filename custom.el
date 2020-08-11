@@ -12,16 +12,34 @@
  '(custom-enabled-themes (quote (doom-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("fe94e2e42ccaa9714dd0f83a5aa1efeef819e22c5774115a9984293af609fce7" "bc836bf29eab22d7e5b4c142d201bcce351806b7c1f94955ccafab8ce5b20208" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" default)))
+    ("990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "fe94e2e42ccaa9714dd0f83a5aa1efeef819e22c5774115a9984293af609fce7" "bc836bf29eab22d7e5b4c142d201bcce351806b7c1f94955ccafab8ce5b20208" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" default)))
  '(fci-rule-color "#505050")
  '(font-latex-fontify-script nil)
+ '(global-linum-mode t)
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
  '(jdee-db-active-breakpoint-face-colors (cons "#1b1d1e" "#fc20bb"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#1b1d1e" "#60aa00"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1b1d1e" "#505050"))
  '(objed-cursor-color "#d02b61")
  '(package-selected-packages
    (quote
-    (all-the-icons-ibuffer-mode all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired-mode all-the-icons-dired doom-modeline yasnippet olivetti use-package-chords all-the-icons doom-themes vi-tilde-fringe ace-window auctex spacemacs-theme use-package exec-path-from-shell evil avy)))
+    (doom-modeline all-the-icons-ibuffer all-the-icons-dired all-the-icons all-the-icons-ibuffer-mode all-the-icons-dired-mode yasnippet olivetti use-package-chords doom-themes vi-tilde-fringe ace-window auctex spacemacs-theme use-package exec-path-from-shell evil avy)))
  '(pdf-view-midnight-colors (cons "#dddddd" "#1b1d1e"))
  '(rustic-ansi-faces
    ["#1b1d1e" "#d02b61" "#60aa00" "#d08928" "#6c9ef8" "#b77fdb" "#00aa80" "#dddddd"])
@@ -61,4 +79,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:inherit nil :stipple nil :background "#121a21" :foreground "#e6e1cf" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "MesloLGS NF"))))
+ '(hl-line ((t (:background "#161719" :height 140 :family "MesloLGS NF")))))

@@ -1,3 +1,7 @@
+;;;; NOTES
+;; Favorite background color: #121a21
+;; Favorite default font color: #e6e1cf
+
 ;; melpa and use-package
 ;; -----------------------------------------------------
 (require 'package)
@@ -23,6 +27,23 @@
 ;; -----------------------------------------------------
 
 
+;; Moves focus to iTerm2
+;; -----------------------------------------------------
+(defun os-switch-to-iTerm2 ()
+  (interactive)
+  (when (display-graphic-p)
+    (do-applescript "tell application \"iTerm2\" to activate")))
+
+(global-set-key (kbd "C-`") 'os-switch-to-iTerm2)
+;; -----------------------------------------------------
+
+
+;; Stops Emacs from asking if a theme is safe
+;; -----------------------------------------------------
+(setq custom-safe-themes t)
+;; -----------------------------------------------------
+
+
 ;; Tells Emacs to place tilde files in a special directory.
 ;; -----------------------------------------------------
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -38,7 +59,7 @@
 
 ;; For use with sync-TeX and similar applications:
 ;; -----------------------------------------------------
-(server-start)
+; (server-start)
 ;; -----------------------------------------------------
 
 
@@ -48,7 +69,7 @@
 ;; -----------------------------------------------------
 
 
-;; TEST: see if this allows toggling
+;; For resolving keybinding conflicts
 ;; -----------------------------------------------------
 (global-set-key (kbd "C-M-&") 'override-global-mode)
 
@@ -145,11 +166,7 @@
 
 ;; all-the-icons
 ;; -----------------------------------------------------
-(use-package all-the-icons ; General
-  :ensure t)
-
-(require 'all-the-icons-gnus) ; Gnus
-(all-the-icons-gnus-setup)
+(require 'all-the-icons)
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; Dired
 
@@ -176,8 +193,7 @@
 ;; -----------------------------------------------------
 (use-package evil
   :ensure t
-  :config (setq evil-default-state 'emacs)
-	  (evil-mode 1))
+  :config (evil-mode 1))
 ;; -----------------------------------------------------
 
 
@@ -202,3 +218,19 @@
 ;; -----------------------------------------------------
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+
+
+
+;;;; TESTING
+;; -----------------------------------------------------
+;; TERMINAL MAPPINGS TO SUPPORT ITERM2 FOR MAC
+;; -----------------------------------------------------
+;;      (progn
+;;      (let ((map (if (boundp 'input-decode-map)
+;;                  input-decode-map
+;;      function-key-map)))
+;;      (define-key map "\e[1;P9"  (kbd "C-,"))))
+
+;;      (global-set-key (kbd "C-,") 'avy-goto-char-2)
+
+;; input-decode-map
