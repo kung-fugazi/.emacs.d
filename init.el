@@ -1,8 +1,10 @@
+;;;; My Emacs Init File (~/.emacs.d/init.el)
+
 ;;;; NOTES
 ;; Favorite background color: #121a21
 ;; Favorite default font color: #e6e1cf
 
-;; melpa and use-package
+;; Enables melpa and use-package
 ;; -----------------------------------------------------
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -20,6 +22,8 @@
 ;; -----------------------------------------------------
 
 
+;;;; CONFIGURATION
+
 ;; Moves 'Customize' to distinct file
 ;; -----------------------------------------------------
 (setq custom-file "~/.emacs.d/custom.el")
@@ -27,14 +31,13 @@
 ;; -----------------------------------------------------
 
 
-;; Moves focus to iTerm2
+;; Fixes when Emacs opens in iTerm2
 ;; -----------------------------------------------------
-(defun os-switch-to-iTerm2 ()
-  (interactive)
-  (when (display-graphic-p)
-    (do-applescript "tell application \"iTerm2\" to activate")))
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
 
-(global-set-key (kbd "C-`") 'os-switch-to-iTerm2)
+(add-hook 'window-setup-hook 'on-after-init)
 ;; -----------------------------------------------------
 
 
@@ -49,6 +52,7 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 ;; -----------------------------------------------------
 
+
 ;; Disable tool bar, menu bar, scroll bar.
 ;; -----------------------------------------------------
 (tool-bar-mode -1)
@@ -59,7 +63,7 @@
 
 ;; For use with sync-TeX and similar applications:
 ;; -----------------------------------------------------
-; (server-start)
+(server-start)
 ;; -----------------------------------------------------
 
 
@@ -72,6 +76,15 @@
 ;; For resolving keybinding conflicts
 ;; -----------------------------------------------------
 (global-set-key (kbd "C-M-&") 'override-global-mode)
+;; -----------------------------------------------------
+
+
+;; Sets M-n as delete-backward-char and M-N as kill-whole-line
+;; -----------------------------------------------------
+(global-set-key (kbd "M-n") 'delete-backward-char)
+(global-set-key (kbd "M-N") 'kill-whole-line)
+;; -----------------------------------------------------
+
 
 ;; auto-fill-mode default in all major modes
 ;; -----------------------------------------------------
@@ -79,10 +92,12 @@
 ;; -----------------------------------------------------
 
 
-;; enable upcase-region and downcase-region
+;; Un-disables (double negative... tricky) some advanced functions
 ;; -----------------------------------------------------
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 ;; -----------------------------------------------------
 
 
@@ -98,8 +113,29 @@
 ;; -----------------------------------------------------
 
 
+;; Maximize frame
+;; -----------------------------------------------------
+(global-set-key (kbd "M-C-,") 'toggle-frame-maximized)
+;; -----------------------------------------------------
 
-;;; PACKAGES (buffer-size)
+
+
+
+;;;; FUNCTIONS
+
+;; Moves focus to iTerm2
+;; -----------------------------------------------------
+(defun os-switch-to-iTerm2 ()
+  (interactive)
+  (when (display-graphic-p)
+    (do-applescript "tell application \"iTerm2\" to activate")))
+
+(global-set-key (kbd "C-`") 'os-switch-to-iTerm2)
+;; -----------------------------------------------------
+
+
+
+;;;; PACKAGES (buffer-size)
 
 ;; use-package-chords
 ;; -----------------------------------------------------
@@ -120,7 +156,12 @@
 
 	  (add-hook 'TeX-mode-hook 'make-my-slash-backslash)
           (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-	  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode))
+	  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+          (add-hook 'LaTeX-mode-hook 'olivetti-mode)
+	  (add-hook 'LaTeX-mode-hook
+                 (lambda ()
+                   (make-local-variable 'olivetti-body-width)
+		   (setq olivetti-body-width 110))))
 ;; -----------------------------------------------------
 
 
@@ -129,6 +170,16 @@
 (use-package ibuffer
   :ensure t
   :bind ("C-x C-b" . ibuffer))
+;; -----------------------------------------------------
+
+
+;; all-the-icons
+;; -----------------------------------------------------
+(require 'all-the-icons)
+
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; Dired
+
+(all-the-icons-ibuffer-mode 1) ; Ibuffer
 ;; -----------------------------------------------------
 
 
@@ -141,7 +192,7 @@
  ("C-," . avy-goto-char-2)
  ("C-<" . avy-goto-line)
  ("C-." . avy-goto-char-in-line)
- ("C->" . avy-isearch)
+ ("C->" . avy-goto-char)
  ("C-;" . avy-copy-region)
  ("C-:" . avy-kill-region))
 ;; -----------------------------------------------------
@@ -151,7 +202,7 @@
 ;; -----------------------------------------------------
 (use-package ace-window
   :ensure t
-  :bind ("C-o" . ace-window)
+  :bind ("M-o" . ace-window)
   :config (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 ;; -----------------------------------------------------
 
@@ -161,16 +212,6 @@
 (use-package vi-tilde-fringe
   :ensure t
   :config (global-vi-tilde-fringe-mode 1))
-;; -----------------------------------------------------
-
-
-;; all-the-icons
-;; -----------------------------------------------------
-(require 'all-the-icons)
-
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; Dired
-
-(all-the-icons-ibuffer-mode 1) ; Ibuffer
 ;; -----------------------------------------------------
 
 
@@ -189,11 +230,17 @@
 ;; -----------------------------------------------------
 
 
-;; evil
+;; evil-mode
 ;; -----------------------------------------------------
 (use-package evil
   :ensure t
+  :init (setq evil-want-keybinding nil)
   :config (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config (evil-collection-init))
 ;; -----------------------------------------------------
 
 
@@ -216,21 +263,3 @@
 (use-package yasnippet
   :ensure t)
 ;; -----------------------------------------------------
-(put 'narrow-to-region 'disabled nil)
-(put 'set-goal-column 'disabled nil)
-
-
-
-;;;; TESTING
-;; -----------------------------------------------------
-;; TERMINAL MAPPINGS TO SUPPORT ITERM2 FOR MAC
-;; -----------------------------------------------------
-;;      (progn
-;;      (let ((map (if (boundp 'input-decode-map)
-;;                  input-decode-map
-;;      function-key-map)))
-;;      (define-key map "\e[1;P9"  (kbd "C-,"))))
-
-;;      (global-set-key (kbd "C-,") 'avy-goto-char-2)
-
-;; input-decode-map
